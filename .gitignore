@@ -23,8 +23,6 @@ package-lock.json
 plan.json
 plan.out
 saved.plan
-stac-server-*
-stac-server.tgz
 terraform-visual-report
 terraform.tgz
 modules/historical-ingest/lambda/package/*
