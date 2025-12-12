@@ -17,7 +17,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/reusable-precommit.yml
     
-  Build, validate, apply, then destroy the terraform module. Notify slack of success/failure
+  # Build, validate, apply, then destroy the terraform module. Notify slack of success/failure
   release-tests:
     permissions:
       id-token: write

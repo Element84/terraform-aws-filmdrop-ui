@@ -1,10 +1,5 @@
 formatter: "markdown"
 
-# update module readmes
-recursive:
-  enabled: true
-  path: modules
-
 sections:
   hide:
     - resources

@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/antonbabenko/pre-commit-terraform
-    rev: v1.103.0
+    rev: v1.104.0
     hooks:
       - id: terraform_fmt
         name: terraform fmt
@@ -11,13 +11,14 @@ repos:
   # handle things like recursive.enabled: true well. recommended using this official terraform-docs
   # hook instead
   - repo: https://github.com/terraform-docs/terraform-docs
-    rev: v0.20.0
+    rev: v0.21.0
     hooks:
       - id: terraform-docs-go
-        args: ["."]
+        args: ["--recursive=false", "."]
+        files: ^(main\.tf|inputs\.tf|README\.md|.*\.tf)$
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.14.2
+    rev: v0.14.9
     hooks:
       - id: ruff-check
       - id: ruff-format
