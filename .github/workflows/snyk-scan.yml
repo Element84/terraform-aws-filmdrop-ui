@@ -31,12 +31,6 @@ jobs:
         with:
           args: --sarif-file-output=snyk.sarif
 
-        # Push the Snyk Code results into GitHub Code Scanning tab
-      - name: Upload result to GitHub Code Scanning
-        uses: github/codeql-action/upload-sarif@v4
-        with:
-          sarif_file: snyk.sarif
-
       - name: Snyk IaC gatekeeper
         uses: snyk/actions/iac@v1
         env:
