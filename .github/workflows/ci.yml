@@ -10,7 +10,7 @@ jobs:
   pre-commit:
     uses: ./.github/workflows/reusable-precommit.yml
 
-  update-lambdas:
+  validate:
     runs-on: ubuntu-latest
     env:
       CI: true
