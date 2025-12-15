@@ -52,6 +52,7 @@ jobs:
           sed -i "s|VAR-TF_STATE_BUCKET|${{ secrets.FD_CICD_TF_STATE_BUCKET }}|g" backend.tf
           sed -i "s|VAR-AWS_REGION|${{ secrets.FD_CICD_AWS_REGION}}|g" backend.tf
           sed -i "s|VAR-TF_STATE_FILENAME|$TF_STATE_FILENAME|g" backend.tf
+          echo "AWS REGION: ${{secrets.FD_CICD_AWS_REGION}}"
 
 
       - name: Configure Terraform Init Credentials
