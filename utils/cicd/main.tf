@@ -15,5 +15,7 @@ module "main" {
   filmdrop_ui_logo        = "bm9uZQo=" # Base64: 'none'
   filmdrop_ui_release_tag = "v6.1.1-0"
   vpc_id                  = module.vpc-data.vpc_id
+  vpc_private_subnet_ids  = module.vpc-data.private_subnet_ids
+  vpc_security_group_ids  = [module.vpc-data.security_group_id]
   console_ui_bucket_name  = "test-build-bucket"
 }
