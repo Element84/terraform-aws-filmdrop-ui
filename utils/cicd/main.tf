@@ -11,8 +11,8 @@ module "vpc-data" {
 module "main" {
   source                  = "../.."
   filmdrop_ui_logo_file   = "../../logo.png"
-  filmdrop_ui_config      = "../../config.dev.json"
-  filmdrop_ui_logo        = "bm9uZQo=" # Base64: 'none'
+  filmdrop_ui_config      = filebase64("../../config.dev.json")
+  filmdrop_ui_logo        = filebase64("../../logo.png")
   filmdrop_ui_release_tag = "v6.1.1-0"
   vpc_id                  = module.vpc-data.vpc_id
   vpc_private_subnet_ids  = module.vpc-data.private_subnet_ids
