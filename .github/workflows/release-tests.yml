@@ -49,8 +49,8 @@ jobs:
         id: prep_env
         working-directory: utils/cicd
         run: |
-          sed -i "s|VAR-TF_STATE_BUCKET|${{ secrets.CICD_TF_STATE_BUCKET }}|g" backend.tf
-          sed -i "s|VAR-AWS_REGION|${{ secrets.CICD_AWS_REGION}}|g" backend.tf
+          sed -i "s|VAR-TF_STATE_BUCKET|${{ secrets.FD_CICD_TF_STATE_BUCKET }}|g" backend.tf
+          sed -i "s|VAR-AWS_REGION|${{ secrets.FD_CICD_AWS_REGION}}|g" backend.tf
           sed -i "s|VAR-TF_STATE_FILENAME|$TF_STATE_FILENAME|g" backend.tf
 
 
@@ -58,8 +58,8 @@ jobs:
         id: init_creds
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-region: ${{ secrets.CICD_AWS_REGION }}
-          role-to-assume: ${{ secrets.CICD_AWS_ROLE }}
+          aws-region: ${{ secrets.FD_CICD_AWS_REGION }}
+          role-to-assume: ${{ secrets.FD_CICD_AWS_ROLE }}
           role-session-name: GitHubReleaseInit
 
       - name: Terraform Init
@@ -76,8 +76,8 @@ jobs:
         id: plan_creds
         uses: aws-actions/configure-aws-credentials@v5
         with:
-          aws-region: ${{ secrets.CICD_AWS_REGION }}
-          role-to-assume: ${{ secrets.CICD_AWS_ROLE }}
+          aws-region: ${{ secrets.FD_CICD_AWS_REGION }}
+          role-to-assume: ${{ secrets.FD_CICD_AWS_ROLE }}
           role-session-name: GitHubReleasePlan
 
       - name: Terraform Plan
@@ -89,8 +89,8 @@ jobs:
         id: apply_creds
         uses: aws-actions/configure-aws-credentials@v5
         with:
-          aws-region: ${{ secrets.CICD_AWS_REGION }}
-          role-to-assume: ${{ secrets.CICD_AWS_ROLE }}
+          aws-region: ${{ secrets.FD_CICD_AWS_REGION }}
+          role-to-assume: ${{ secrets.FD_CICD_AWS_ROLE }}
           role-session-name: GitHubReleaseApply
 
       - name: Terraform Apply
@@ -107,9 +107,9 @@ jobs:
       #   uses: slackapi/slack-github-action@v2.1.1
       #   with:
       #     method: chat.postMessage
-      #     token: ${{ secrets.CICD_SLACK_BOT_TOKEN }}
+      #     token: ${{ secrets.FD_CICD_SLACK_BOT_TOKEN }}
       #     payload: |
-      #       channel: ${{ secrets.CICD_SLACK_CHANNEL_ID }}
+      #       channel: ${{ secrets.FD_CICD_SLACK_CHANNEL_ID }}
       #       text: ":badger_dance: terraform-aws-console-ui - ${{  github.ref_name }} - terraform apply job has succeeded!\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
 
       # - name: Post tf_apply failure status to Slack channel
@@ -119,9 +119,9 @@ jobs:
       #   uses: slackapi/slack-github-action@v2.1.1
       #   with:
       #     method: chat.postMessage
-      #     token: ${{ secrets.CICD_SLACK_BOT_TOKEN }}
+      #     token: ${{ secrets.FD_CICD_SLACK_BOT_TOKEN }}
       #     payload: |
-      #       channel: ${{ secrets.CICD_SLACK_CHANNEL_ID }}
+      #       channel: ${{ secrets.FD_CICD_SLACK_CHANNEL_ID }}
       #       text: ":sadpanda: terraform-aws-console-ui - ${{  github.ref_name }} - terraform apply has failed!\n:alert: make sure cleanup job deletes all AWS resources!\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
 
       - name: Configure Terraform Cleanup Check Credentials
@@ -129,8 +129,8 @@ jobs:
         if: always()
         uses: aws-actions/configure-aws-credentials@v5
         with:
-          aws-region: ${{ secrets.CICD_AWS_REGION }}
-          role-to-assume: ${{ secrets.CICD_AWS_ROLE }}
+          aws-region: ${{ secrets.FD_CICD_AWS_REGION }}
+          role-to-assume: ${{ secrets.FD_CICD_AWS_ROLE }}
           role-session-name: GitHubReleaseCleanupCheck
 
       - name: Terraform Destroy Pre-Check
@@ -144,8 +144,8 @@ jobs:
         if: always()
         uses: aws-actions/configure-aws-credentials@v5
         with:
-          aws-region: ${{ secrets.CICD_AWS_REGION }}
-          role-to-assume: ${{ secrets.CICD_AWS_ROLE }}
+          aws-region: ${{ secrets.FD_CICD_AWS_REGION }}
+          role-to-assume: ${{ secrets.FD_CICD_AWS_ROLE }}
           role-session-name: GitHubReleaseCleanup
 
       - name: Terraform Destroy
@@ -163,9 +163,9 @@ jobs:
       #   uses: slackapi/slack-github-action@v2.1.1
       #   with:
       #     method: chat.postMessage
-      #     token: ${{ secrets.CICD_SLACK_BOT_TOKEN }}
+      #     token: ${{ secrets.FD_CICD_SLACK_BOT_TOKEN }}
       #     payload: |
-      #       channel: ${{ secrets.CICD_SLACK_CHANNEL_ID }}
+      #       channel: ${{ secrets.FD_CICD_SLACK_CHANNEL_ID }}
       #       text: ":badger_dance: terraform-aws-console-ui - ${{  github.ref_name }} - cleanup job has succeeded!\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
 
       # - name: Post tf_destroy failure status to Slack channel
@@ -175,7 +175,7 @@ jobs:
       #   uses: slackapi/slack-github-action@v2.1.1
       #   with:
       #     method: chat.postMessage
-      #     token: ${{ secrets.CICD_SLACK_BOT_TOKEN }}
+      #     token: ${{ secrets.FD_CICD_SLACK_BOT_TOKEN }}
       #     payload: |
-      #       channel: ${{ secrets.CICD_SLACK_CHANNEL_ID }}
+      #       channel: ${{ secrets.FD_CICD_SLACK_CHANNEL_ID }}
       #       text: ":sadpanda: terraform-aws-console-ui - ${{  github.ref_name }} - cleanup job has failed!\n:alert: make sure AWS resources are deleted!\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
