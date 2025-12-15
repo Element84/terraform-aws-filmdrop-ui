@@ -28,7 +28,6 @@ data "aws_iam_policy_document" "console_ui_codebuild_policy" {
       "codebuild:*",
       "eks:*",
       "kms:*",
-      "iam:*",
       "ecr:*",
       "lambda:*",
       "sns:*",
