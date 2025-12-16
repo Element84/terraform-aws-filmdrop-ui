@@ -25,7 +25,7 @@ variable "filmdrop_ui_release_tag" {
 }
 
 variable "filmdrop_ui_config" {
-  description = "FilmDrop UI Deployment Config File"
+  description = "The base64 encoded file contents of the Console UI Deployment Config File"
   type        = string
 }
 
@@ -35,7 +35,7 @@ variable "filmdrop_ui_logo_file" {
 }
 
 variable "filmdrop_ui_logo" {
-  description = "The file contents of the supplied custom logo"
+  description = "The base64 encoded file contents of the supplied custom logo"
   type        = string
 }
 
