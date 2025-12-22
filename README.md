@@ -6,6 +6,8 @@ The Filmdrop Console-UI provides an out-of-the-box open source solution for sear
 
 This Terraform module provisions the necessary infrastructure to deploy the Console-UI in an existing AWS account and organization. It can be deployed standalone or integrated into a comprehensive Filmdrop deployment, as demonstrated in the `default.tfvars` in the [Filmdrop AWS Terraform modules](https://github.com/Element84/filmdrop-aws-tf-modules) repository.
 
+### Documentation created with assistance of AI
+
 
 ## Overview
 
