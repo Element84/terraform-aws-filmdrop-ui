@@ -97,29 +97,29 @@ jobs:
         run: terraform apply -input=false test.tfplan
 
         # Note that we only send success messages on tags, not all pushes to main - temporarily commenting out until rest of pipeline runs and this is in a production ready state to not blow up slack channel
-      # - name: Post tf_apply success status to Slack channel
-      #   id: tf_apply_successs
-      #   if: steps.tf_apply.outcome == 'success' && github.ref_name != 'main'
-      #   continue-on-error: true
-      #   uses: slackapi/slack-github-action@v2.1.1
-      #   with:
-      #     method: chat.postMessage
-      #     token: ${{ secrets.FD_CICD_SLACK_BOT_TOKEN }}
-      #     payload: |
-      #       channel: ${{ secrets.FD_CICD_SLACK_CHANNEL_ID }}
-      #       text: ":badger_dance: terraform-aws-filmdrop-ui - ${{  github.ref_name }} - terraform apply job has succeeded!\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+      - name: Post tf_apply success status to Slack channel
+        id: tf_apply_successs
+        if: steps.tf_apply.outcome == 'success' && github.ref_name != 'main'
+        continue-on-error: true
+        uses: slackapi/slack-github-action@v2.1.1
+        with:
+          method: chat.postMessage
+          token: ${{ secrets.FD_CICD_SLACK_BOT_TOKEN }}
+          payload: |
+            channel: ${{ secrets.FD_CICD_SLACK_CHANNEL_ID }}
+            text: ":badger_dance: terraform-aws-filmdrop-ui - ${{  github.ref_name }} - terraform apply job has succeeded!\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
 
-      # - name: Post tf_apply failure status to Slack channel
-        # id: tf_apply_failure
-        # if: steps.tf_apply.outcome != 'success'
-        # continue-on-error: true
-        # uses: slackapi/slack-github-action@v2.1.1
-        # with:
-        #   method: chat.postMessage
-        #   token: ${{ secrets.FD_CICD_SLACK_BOT_TOKEN }}
-        #   payload: |
-        #     channel: ${{ secrets.FD_CICD_SLACK_CHANNEL_ID }}
-        #     text: ":sadpanda: terraform-aws-filmdrop-ui - ${{  github.ref_name }} - terraform apply has failed!\n:alert: make sure cleanup job deletes all AWS resources!\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+      - name: Post tf_apply failure status to Slack channel
+        id: tf_apply_failure
+        if: steps.tf_apply.outcome != 'success'
+        continue-on-error: true
+        uses: slackapi/slack-github-action@v2.1.1
+        with:
+          method: chat.postMessage
+          token: ${{ secrets.FD_CICD_SLACK_BOT_TOKEN }}
+          payload: |
+            channel: ${{ secrets.FD_CICD_SLACK_CHANNEL_ID }}
+            text: ":sadpanda: terraform-aws-filmdrop-ui - ${{  github.ref_name }} - terraform apply has failed!\n:alert: make sure cleanup job deletes all AWS resources!\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
 
       - name: Configure Terraform Cleanup Check Credentials
         id: cleanup_check_creds
@@ -153,26 +153,26 @@ jobs:
         run: terraform apply -destroy -input=false test-cleanup.tfplan
 
         # Note that we only send success messages on tags, not all pushes to main - same as above - commented out until in production ready state
-      # - name: Post tf_destroy success status to Slack channel
-      #   id: tf_destroy_apply_successs
-      #   if: steps.tf_destroy_apply.outcome == 'success' && github.ref_name != 'main'
-      #   continue-on-error: true
-      #   uses: slackapi/slack-github-action@v2.1.1
-      #   with:
-      #     method: chat.postMessage
-      #     token: ${{ secrets.FD_CICD_SLACK_BOT_TOKEN }}
-      #     payload: |
-      #       channel: ${{ secrets.FD_CICD_SLACK_CHANNEL_ID }}
-      #       text: ":badger_dance: terraform-aws-filmdrop-ui - ${{  github.ref_name }} - cleanup job has succeeded!\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+      - name: Post tf_destroy success status to Slack channel
+        id: tf_destroy_apply_successs
+        if: steps.tf_destroy_apply.outcome == 'success' && github.ref_name != 'main'
+        continue-on-error: true
+        uses: slackapi/slack-github-action@v2.1.1
+        with:
+          method: chat.postMessage
+          token: ${{ secrets.FD_CICD_SLACK_BOT_TOKEN }}
+          payload: |
+            channel: ${{ secrets.FD_CICD_SLACK_CHANNEL_ID }}
+            text: ":badger_dance: terraform-aws-filmdrop-ui - ${{  github.ref_name }} - cleanup job has succeeded!\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
 
-      # - name: Post tf_destroy failure status to Slack channel
-      #   id: tf_destroy_apply_failure
-      #   if: steps.tf_destroy_apply.outcome != 'success'
-      #   continue-on-error: true
-      #   uses: slackapi/slack-github-action@v2.1.1
-      #   with:
-      #     method: chat.postMessage
-      #     token: ${{ secrets.FD_CICD_SLACK_BOT_TOKEN }}
-      #     payload: |
-      #       channel: ${{ secrets.FD_CICD_SLACK_CHANNEL_ID }}
-      #       text: ":sadpanda: terraform-aws-filmdrop-ui - ${{  github.ref_name }} - cleanup job has failed!\n:alert: make sure AWS resources are deleted!\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+      - name: Post tf_destroy failure status to Slack channel
+        id: tf_destroy_apply_failure
+        if: steps.tf_destroy_apply.outcome != 'success'
+        continue-on-error: true
+        uses: slackapi/slack-github-action@v2.1.1
+        with:
+          method: chat.postMessage
+          token: ${{ secrets.FD_CICD_SLACK_BOT_TOKEN }}
+          payload: |
+            channel: ${{ secrets.FD_CICD_SLACK_CHANNEL_ID }}
+            text: ":sadpanda: terraform-aws-filmdrop-ui - ${{  github.ref_name }} - cleanup job has failed!\n:alert: make sure AWS resources are deleted!\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
