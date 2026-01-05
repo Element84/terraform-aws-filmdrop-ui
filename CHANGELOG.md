@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
-- Initial stand up of repo and successful test deployment ([2](https://github.com/Element84/terraform-aws-console-ui/pull/2))
+- Initial stand up of repo and successful test deployment ([2](https://github.com/Element84/terraform-aws-filmdrop-ui/pull/2))
 
 ### Changed
 
