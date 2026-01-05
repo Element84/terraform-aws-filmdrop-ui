@@ -1,10 +1,10 @@
-resource "aws_iam_role" "console_ui_codebuild_iam_role" {
-  name_prefix = "console-ui-build-role"
+resource "aws_iam_role" "filmdrop_ui_codebuild_iam_role" {
+  name_prefix = "filmdrop-ui-build-role"
 
-  assume_role_policy = data.aws_iam_policy_document.console_ui_codebuild_assume_role.json
+  assume_role_policy = data.aws_iam_policy_document.filmdrop_ui_codebuild_assume_role.json
 }
 
-data "aws_iam_policy_document" "console_ui_codebuild_assume_role" {
+data "aws_iam_policy_document" "filmdrop_ui_codebuild_assume_role" {
   statement {
     effect = "Allow"
 
@@ -17,7 +17,7 @@ data "aws_iam_policy_document" "console_ui_codebuild_assume_role" {
   }
 }
 
-data "aws_iam_policy_document" "console_ui_codebuild_policy" {
+data "aws_iam_policy_document" "filmdrop_ui_codebuild_policy" {
   statement {
     sid    = "CodeBuildPolicy"
     effect = "Allow"
@@ -55,7 +55,7 @@ data "aws_iam_policy_document" "console_ui_codebuild_policy" {
   }
 }
 
-resource "aws_iam_role_policy" "console_ui_codebuild_iam_policy" {
-  role   = aws_iam_role.console_ui_codebuild_iam_role.name
-  policy = data.aws_iam_policy_document.console_ui_codebuild_policy.json
+resource "aws_iam_role_policy" "filmdrop_ui_codebuild_iam_policy" {
+  role   = aws_iam_role.filmdrop_ui_codebuild_iam_role.name
+  policy = data.aws_iam_policy_document.filmdrop_ui_codebuild_policy.json
 }

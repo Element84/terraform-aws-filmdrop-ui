@@ -1,19 +1,21 @@
-## Filmdrop Console-UI Terraform Module
+## Filmdrop Filmdrop-UI Terraform Module
 
-This repository contains the Terraform module to build and deploy the React application for the [Filmdrop Console-UI](https://github.com/Element84/filmdrop-ui), and is part of the larger [Filmdrop AWS Terraform modules](https://github.com/Element84/filmdrop-aws-tf-modules) ecosystem.
+This repository contains the Terraform module to build and deploy the React application for the [Filmdrop Filmdrop-UI](https://github.com/Element84/filmdrop-ui), and is part of the larger [Filmdrop AWS Terraform modules](https://github.com/Element84/filmdrop-aws-tf-modules) ecosystem.
 
-The Filmdrop Console-UI provides an out-of-the-box open source solution for searching, visualizing, and interacting with geospatial data catalogs through STAC (Spatio-Temporal Asset Catalogs) via a Leaflet map and React application.
+The Filmdrop Filmdrop-UI provides an out-of-the-box open source solution for searching, visualizing, and interacting with geospatial data catalogs through STAC (Spatio-Temporal Asset Catalogs) via a Leaflet map and React application.
 
-This Terraform module provisions the necessary infrastructure to deploy the Console-UI in an existing AWS account and organization. It can be deployed standalone or integrated into a comprehensive Filmdrop deployment, as demonstrated in the `default.tfvars` in the [Filmdrop AWS Terraform modules](https://github.com/Element84/filmdrop-aws-tf-modules) repository.
+This Terraform module provisions the necessary infrastructure to deploy the Filmdrop-UI in an existing AWS account and organization. It can be deployed standalone or integrated into a comprehensive Filmdrop deployment, as demonstrated in the `default.tfvars` in the [Filmdrop AWS Terraform modules](https://github.com/Element84/filmdrop-aws-tf-modules) repository.
+
+README generated with AI assistance
 
 ### Documentation created with assistance of AI
 
 
 ## Overview
 
-This module automates the deployment of the Filmdrop Console-UI by:
+This module automates the deployment of the Filmdrop Filmdrop-UI by:
 
-1. **Creating an AWS CodeBuild project** that downloads, builds, and deploys the Filmdrop Console-UI React application
+1. **Creating an AWS CodeBuild project** that downloads, builds, and deploys the Filmdrop Filmdrop-UI React application
 2. **Provisioning S3 buckets** for storing build configurations and hosting the built application
 3. **Managing IAM roles and policies** for CodeBuild execution
 
@@ -33,7 +35,7 @@ Build Triggered Automatically
 3. Build React app (npm install + build)
 4. Deploy to S3 bucket
     ↓
-Console-UI Available in S3
+Filmdrop-UI Available in S3
 ```
 
 The CodeBuild project runs inside a VPC and requires:
@@ -62,8 +64,8 @@ Before using this module, ensure you have:
     - *Requires* an already existing bucket for the application to be deployed to
 
 4. **Configuration Files**:
-   - **Console UI Config JSON** (`config.dev.json`): Configuration file for the Console-UI application (see [Filmdrop UI documentation](https://github.com/Element84/filmdrop-ui) for structure)
-   - **Logo File** (`logo.png`): Custom logo for branding
+   - **Filmdrop UI Config JSON** (`./utils/config.dev.json`): Configuration file for the Filmdrop-UI application (see [Filmdrop UI documentation](https://github.com/Element84/filmdrop-ui) for structure)
+   - **Logo File** (`./utils/logo.png`): Custom logo for branding
 
 
 ## Usage
@@ -101,7 +103,7 @@ The module includes a `null_resource` that automatically triggers a CodeBuild bu
 
 ### 4. Build Monitoring
 
-Build logs are sent to CloudWatch Logs at `/filmdrop/console_ui_build` for debugging and monitoring.
+Build logs are sent to CloudWatch Logs at `/filmdrop/filmdrop_ui_build` for debugging and monitoring.
 
 ## Configuration File Format
 
@@ -109,10 +111,10 @@ Your `config.json` file should follow the [Filmdrop UI configuration schema](htt
 
 ```json
 {
-  "APP_NAME": "FilmDrop Console",
-  "PUBLIC_URL": "https://console.dev.example.com",
+  "APP_NAME": "FilmDrop Filmdrop",
+  "PUBLIC_URL": "https://filmdrop.dev.example.com",
   "LOGO_URL": "./logo.png",
-  "LOGO_ALT": "FilmDrop Console Logo",
+  "LOGO_ALT": "FilmDrop Filmdrop Logo",
   "STAC_API_URL": "https://stac-api.dev.example.com",
   "DEFAULT_COLLECTION": "some-collection",
   "STAC_LINK_ENABLED": true,
@@ -168,8 +170,8 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_console_ui_bucket_name"></a> [console\_ui\_bucket\_name](#input\_console\_ui\_bucket\_name) | Console UI Bucket Name | `string` | n/a | yes |
-| <a name="input_filmdrop_ui_config"></a> [filmdrop\_ui\_config](#input\_filmdrop\_ui\_config) | The base64 encoded file contents of the Console UI Deployment Config File | `string` | n/a | yes |
+| <a name="input_filmdrop_ui_bucket_name"></a> [filmdrop\_ui\_bucket\_name](#input\_filmdrop\_ui\_bucket\_name) | Filmdrop UI Bucket Name | `string` | n/a | yes |
+| <a name="input_filmdrop_ui_config"></a> [filmdrop\_ui\_config](#input\_filmdrop\_ui\_config) | The base64 encoded file contents of the Filmdrop UI Deployment Config File | `string` | n/a | yes |
 | <a name="input_filmdrop_ui_logo"></a> [filmdrop\_ui\_logo](#input\_filmdrop\_ui\_logo) | The base64 encoded file contents of the supplied custom logo | `string` | n/a | yes |
 | <a name="input_filmdrop_ui_logo_file"></a> [filmdrop\_ui\_logo\_file](#input\_filmdrop\_ui\_logo\_file) | File of the supplied custom logo | `string` | n/a | yes |
 | <a name="input_filmdrop_ui_release_tag"></a> [filmdrop\_ui\_release\_tag](#input\_filmdrop\_ui\_release\_tag) | FilmDrop UI Release | `string` | n/a | yes |

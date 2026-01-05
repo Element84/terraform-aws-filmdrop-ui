@@ -4,7 +4,7 @@ terraform {
     # these are injected from env vars by CICD
     bucket       = "VAR-TF_STATE_BUCKET"
     region       = "VAR-AWS_REGION"
-    key          = "console-ui-cicd-VAR-TF_STATE_FILEMANE.tfstate"
+    key          = "filmdrop-ui-cicd-VAR-TF_STATE_FILEMANE.tfstate"
     use_lockfile = true
   }
 }

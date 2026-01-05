@@ -1,9 +1,9 @@
-resource "aws_codebuild_project" "console_ui_codebuild" {
-  name           = "console-ui-build-${random_id.suffix.hex}"
-  description    = "Builds FilmDrop Console UI"
+resource "aws_codebuild_project" "filmdrop_ui_codebuild" {
+  name           = "filmdrop-ui-build-${random_id.suffix.hex}"
+  description    = "Builds FilmDrop UI"
   build_timeout  = "480"
   queued_timeout = "480"
-  service_role   = aws_iam_role.console_ui_codebuild_iam_role.arn
+  service_role   = aws_iam_role.filmdrop_ui_codebuild_iam_role.arn
 
   artifacts {
     type = "NO_ARTIFACTS"
@@ -48,20 +48,20 @@ resource "aws_codebuild_project" "console_ui_codebuild" {
 
     environment_variable {
       name  = "CONTENT_BUCKET"
-      value = var.console_ui_bucket_name
+      value = var.filmdrop_ui_bucket_name
     }
   }
 
   logs_config {
     cloudwatch_logs {
-      group_name  = "/filmdrop/console_ui_build"
-      stream_name = "console-ui-build"
+      group_name  = "/filmdrop/filmdrop_ui_build"
+      stream_name = "filmdrop-ui-build"
     }
   }
 
   source {
     type     = "S3"
-    location = "${aws_s3_bucket.console_ui_source_config.arn}/"
+    location = "${aws_s3_bucket.filmdrop_ui_source_config.arn}/"
   }
 
   vpc_config {
@@ -71,21 +71,21 @@ resource "aws_codebuild_project" "console_ui_codebuild" {
   }
 
   depends_on = [
-    aws_s3_bucket.console_ui_source_config,
-    aws_s3_object.console_ui_build_spec
+    aws_s3_bucket.filmdrop_ui_source_config,
+    aws_s3_object.filmdrop_ui_build_spec
   ]
 }
 
-resource "null_resource" "trigger_console_ui_upgrade" {
+resource "null_resource" "trigger_filmdrop_ui_upgrade" {
   triggers = {
-    new_codebuild           = aws_codebuild_project.console_ui_codebuild.id
+    new_codebuild           = aws_codebuild_project.filmdrop_ui_codebuild.id
     region                  = data.aws_region.current.name
     account                 = data.aws_caller_identity.current.account_id
     filmdrop_ui_release_tag = var.filmdrop_ui_release_tag
     filmdrop_ui_config      = var.filmdrop_ui_config
-    console_ui_bucket_name  = var.console_ui_bucket_name
-    new_source              = aws_s3_bucket.console_ui_source_config.id
-    new_build_spec          = aws_s3_object.console_ui_build_spec.etag
+    filmdrop_ui_bucket_name = var.filmdrop_ui_bucket_name
+    new_source              = aws_s3_bucket.filmdrop_ui_source_config.id
+    new_build_spec          = aws_s3_object.filmdrop_ui_build_spec.etag
   }
 
   provisioner "local-exec" {
@@ -95,7 +95,7 @@ export AWS_DEFAULT_REGION=${data.aws_region.current.name}
 export AWS_REGION=${data.aws_region.current.name}
 
 echo "Triggering CodeBuild Project."
-START_RESULT=$(aws codebuild start-build --project-name ${aws_codebuild_project.console_ui_codebuild.id})
+START_RESULT=$(aws codebuild start-build --project-name ${aws_codebuild_project.filmdrop_ui_codebuild.id})
 BUILD_ID=$(echo $START_RESULT | jq '.build.id' -r)
 
 BUILD_STATUS="IN_PROGRESS"
@@ -113,15 +113,15 @@ if [[ "$BUILD_STATUS" != "SUCCEEDED" ]]; then
     echo "Build failed - logs are available at [$LOG_URL]"
     exit 1
 else
-    echo "console UI CodeBuild succeeded"
+    echo "Filmdrop UI CodeBuild succeeded"
 fi
 EOF
   }
 
   depends_on = [
-    aws_s3_bucket.console_ui_source_config,
-    aws_s3_object.console_ui_build_spec,
-    aws_codebuild_project.console_ui_codebuild
+    aws_s3_bucket.filmdrop_ui_source_config,
+    aws_s3_object.filmdrop_ui_build_spec,
+    aws_codebuild_project.filmdrop_ui_codebuild
   ]
 }
 
@@ -129,20 +129,20 @@ resource "random_id" "suffix" {
   byte_length = 8
 }
 
-resource "aws_s3_bucket" "console_ui_source_config" {
-  bucket        = "console-ui-config-${random_id.suffix.hex}"
+resource "aws_s3_bucket" "filmdrop_ui_source_config" {
+  bucket        = "filmdrop-ui-config-${random_id.suffix.hex}"
   force_destroy = true
 }
 
-resource "aws_s3_bucket_ownership_controls" "console_ui_source_config_ownership_controls" {
-  bucket = aws_s3_bucket.console_ui_source_config.id
+resource "aws_s3_bucket_ownership_controls" "filmdrop_ui_source_config_ownership_controls" {
+  bucket = aws_s3_bucket.filmdrop_ui_source_config.id
   rule {
     object_ownership = "BucketOwnerPreferred"
   }
 }
 
-resource "aws_s3_bucket_public_access_block" "console_ui_source_config_public_access_block" {
-  bucket = aws_s3_bucket.console_ui_source_config.id
+resource "aws_s3_bucket_public_access_block" "filmdrop_ui_source_config_public_access_block" {
+  bucket = aws_s3_bucket.filmdrop_ui_source_config.id
 
   block_public_acls       = true
   block_public_policy     = true
@@ -150,15 +150,15 @@ resource "aws_s3_bucket_public_access_block" "console_ui_source_config_public_ac
   restrict_public_buckets = true
 }
 
-resource "aws_s3_bucket_versioning" "console_ui_source_config_versioning" {
-  bucket = aws_s3_bucket.console_ui_source_config.id
+resource "aws_s3_bucket_versioning" "filmdrop_ui_source_config_versioning" {
+  bucket = aws_s3_bucket.filmdrop_ui_source_config.id
   versioning_configuration {
     status = "Enabled"
   }
 }
 
-resource "aws_s3_object" "console_ui_build_spec" {
-  bucket = aws_s3_bucket.console_ui_source_config.id
+resource "aws_s3_object" "filmdrop_ui_build_spec" {
+  bucket = aws_s3_bucket.filmdrop_ui_source_config.id
   key    = "buildspec.yml"
   source = "${path.module}/buildspec.yml"
   etag   = filemd5("${path.module}/buildspec.yml")
@@ -166,7 +166,7 @@ resource "aws_s3_object" "console_ui_build_spec" {
 
 resource "null_resource" "cleanup_bucket" {
   triggers = {
-    bucket_name = aws_s3_bucket.console_ui_source_config.id
+    bucket_name = aws_s3_bucket.filmdrop_ui_source_config.id
     region      = data.aws_region.current.name
     account     = data.aws_caller_identity.current.account_id
   }
@@ -198,6 +198,6 @@ EOF
 
 
   depends_on = [
-    aws_s3_bucket.console_ui_source_config
+    aws_s3_bucket.filmdrop_ui_source_config
   ]
 }

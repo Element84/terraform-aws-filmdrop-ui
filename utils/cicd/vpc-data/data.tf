@@ -1,4 +1,4 @@
-# For our CI/CD deployment of console-ui, we must pull VPC details of the AWS account that the CI/CD
+# For our CI/CD deployment of filmdrop-ui, we must pull VPC details of the AWS account that the CI/CD
 # process is running in
 
 data "aws_vpc" "vpc" {

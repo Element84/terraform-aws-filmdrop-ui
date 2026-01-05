@@ -1,8 +1,8 @@
 {
-  "APP_NAME": "FilmDrop Console",
-  "PUBLIC_URL": "https://console.dev.example.com",
+  "APP_NAME": "FilmDrop UI",
+  "PUBLIC_URL": "https://filmdrop.dev.example.com",
   "LOGO_URL": "./logo.png",
-  "LOGO_ALT": "FilmDrop Console Logo",
+  "LOGO_ALT": "FilmDrop UI Logo",
   "STAC_API_URL": "https://stac-api.dev.example.com",
   "DEFAULT_COLLECTION": "some-collection",
   "STAC_LINK_ENABLED": true,
