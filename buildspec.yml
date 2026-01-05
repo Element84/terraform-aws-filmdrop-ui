@@ -5,9 +5,9 @@ phases:
     commands:
       - echo "Pulling FilmDrop UI release ..."
       - wget --secure-protocol=TLSv1_2 -q -O filmdrop-ui.tgz "https://github.com/Element84/filmdrop-ui/archive/refs/tags/${FILMDROP_UI_TAG}.tar.gz"
-      - export CONSOLE_UI_DIR="filmdrop-ui-${FILMDROP_UI_TAG:1}"
+      - export FILMDROP_UI_DIR="filmdrop-ui-${FILMDROP_UI_TAG:1}"
       - tar -xzf filmdrop-ui.tgz
-      - cd "$CONSOLE_UI_DIR"
+      - cd "$FILMDROP_UI_DIR"
       - rm -f ./src/assets/config.*
       - echo "Setting environment variables for the Filmdrop UI ..."
       - echo $FILMDROP_UI_CONFIG | base64 --decode >> ./public/config/config.json
