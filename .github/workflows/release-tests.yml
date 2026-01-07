@@ -92,7 +92,6 @@ jobs:
 
       - name: Terraform Apply
         id: tf_apply
-        continue-on-error: true
         working-directory: utils/cicd
         run: terraform apply -input=false test.tfplan
 

@@ -48,7 +48,7 @@ resource "aws_codebuild_project" "filmdrop_ui_codebuild" {
 
     environment_variable {
       name  = "CONTENT_BUCKET"
-      value = var.filmdrop_ui_bucket_name
+      value = aws_s3_bucket.filmdrop_ui_source_config.bucket
     }
   }
 
@@ -130,7 +130,7 @@ resource "random_id" "suffix" {
 }
 
 resource "aws_s3_bucket" "filmdrop_ui_source_config" {
-  bucket        = "filmdrop-ui-config-${random_id.suffix.hex}"
+  bucket        = "${var.filmdrop_ui_bucket_name}-${random_id.suffix.hex}"
   force_destroy = true
 }
 
