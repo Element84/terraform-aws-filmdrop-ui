@@ -17,4 +17,5 @@ phases:
       - npm run build
       - cd build
       - echo "Pushing FilmDrop UI release to S3..."
+      - echo $CONTENT_BUCKET
       - aws s3 sync --delete . s3://$CONTENT_BUCKET --acl bucket-owner-full-control
