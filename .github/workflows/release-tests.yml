@@ -95,10 +95,9 @@ jobs:
         working-directory: utils/cicd
         run: terraform apply -input=false test.tfplan
 
-        # Note that we only send success messages on tags, not all pushes to main - temporarily commenting out until rest of pipeline runs and this is in a production ready state to not blow up slack channel
       - name: Post tf_apply success status to Slack channel
         id: tf_apply_successs
-        if: steps.tf_apply.outcome == 'success' && github.ref_name != 'main'
+        if: steps.tf_apply.outcome == 'success' && github.ref_type == 'tag'
         continue-on-error: true
         uses: slackapi/slack-github-action@v2.1.1
         with:
@@ -110,7 +109,7 @@ jobs:
 
       - name: Post tf_apply failure status to Slack channel
         id: tf_apply_failure
-        if: steps.tf_apply.outcome != 'success'
+        if: steps.tf_apply.outcome != 'success' && github.ref_type == 'tag'
         continue-on-error: true
         uses: slackapi/slack-github-action@v2.1.1
         with:
@@ -151,10 +150,9 @@ jobs:
         working-directory: utils/cicd
         run: terraform apply -destroy -input=false test-cleanup.tfplan
 
-        # Note that we only send success messages on tags, not all pushes to main - same as above - commented out until in production ready state
       - name: Post tf_destroy success status to Slack channel
         id: tf_destroy_apply_successs
-        if: steps.tf_destroy_apply.outcome == 'success' && github.ref_name != 'main'
+        if: steps.tf_destroy_apply.outcome == 'success' && github.ref_type == 'tag'
         continue-on-error: true
         uses: slackapi/slack-github-action@v2.1.1
         with:
@@ -166,7 +164,7 @@ jobs:
 
       - name: Post tf_destroy failure status to Slack channel
         id: tf_destroy_apply_failure
-        if: steps.tf_destroy_apply.outcome != 'success'
+        if: steps.tf_destroy_apply.outcome != 'success' && github.ref_type == 'tag'
         continue-on-error: true
         uses: slackapi/slack-github-action@v2.1.1
         with:

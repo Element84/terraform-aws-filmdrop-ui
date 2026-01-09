@@ -83,7 +83,6 @@ resource "null_resource" "trigger_filmdrop_ui_upgrade" {
     account                 = data.aws_caller_identity.current.account_id
     filmdrop_ui_release_tag = var.filmdrop_ui_release_tag
     filmdrop_ui_config      = var.filmdrop_ui_config
-    filmdrop_ui_bucket_name = var.filmdrop_ui_bucket_name
     new_source              = aws_s3_bucket.filmdrop_ui_source_config.id
     new_build_spec          = aws_s3_object.filmdrop_ui_build_spec.etag
   }

@@ -170,7 +170,6 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_filmdrop_ui_bucket_name"></a> [filmdrop\_ui\_bucket\_name](#input\_filmdrop\_ui\_bucket\_name) | Filmdrop UI Bucket Name | `string` | n/a | yes |
 | <a name="input_filmdrop_ui_config"></a> [filmdrop\_ui\_config](#input\_filmdrop\_ui\_config) | The base64 encoded file contents of the Filmdrop UI Deployment Config File | `string` | n/a | yes |
 | <a name="input_filmdrop_ui_logo"></a> [filmdrop\_ui\_logo](#input\_filmdrop\_ui\_logo) | The base64 encoded file contents of the supplied custom logo | `string` | n/a | yes |
 | <a name="input_filmdrop_ui_logo_file"></a> [filmdrop\_ui\_logo\_file](#input\_filmdrop\_ui\_logo\_file) | File of the supplied custom logo | `string` | n/a | yes |
