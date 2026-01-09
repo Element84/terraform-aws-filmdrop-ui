@@ -17,5 +17,4 @@ module "main" {
   vpc_id                  = module.vpc-data.vpc_id
   vpc_private_subnet_ids  = module.vpc-data.private_subnet_ids
   vpc_security_group_ids  = [module.vpc-data.security_group_id]
-  filmdrop_ui_bucket_name = "filmdrop-ui-config"
 }
