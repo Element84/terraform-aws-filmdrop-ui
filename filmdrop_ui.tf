@@ -126,14 +126,14 @@ EOF
 }
 
 resource "random_id" "suffix" {
-  byte_length = 8
+  byte_length = 4
 }
 
 resource "aws_s3_bucket" "filmdrop_ui_source_config" {
-  bucket        = "${var.filmdrop_ui_bucket_name}-${random_id.suffix.hex}"
+  bucket_prefix = lower(substr("filmdrop-ui-build-${random_id.suffix.hex}-", 0, 60))
   force_destroy = true
 }
-
+# fd-321e4afe-git-console-content-2026010819341989050000000a-9ef1910d
 resource "aws_s3_bucket_ownership_controls" "filmdrop_ui_source_config_ownership_controls" {
   bucket = aws_s3_bucket.filmdrop_ui_source_config.id
   rule {
