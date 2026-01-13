@@ -8,14 +8,9 @@ module "vpc-data" {
   source = "./vpc-data"
 }
 
-# Create a random ID for unique bucket naming
-resource "random_id" "content_bucket_suffix" {
-  byte_length = 4
-}
-
 # Create the content bucket where the built UI will be deployed
 resource "aws_s3_bucket" "filmdrop_ui_content" {
-  bucket_prefix = lower(substr("filmdrop-ui-content-${random_id.content_bucket_suffix.hex}-", 0, 60))
+  bucket_prefix = "filmdrop-ui-content-"
   force_destroy = true
 }
 
