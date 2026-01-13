@@ -8,12 +8,47 @@ module "vpc-data" {
   source = "./vpc-data"
 }
 
+# Create a random ID for unique bucket naming
+resource "random_id" "content_bucket_suffix" {
+  byte_length = 4
+}
+
+# Create the content bucket where the built UI will be deployed
+resource "aws_s3_bucket" "filmdrop_ui_content" {
+  bucket_prefix = lower(substr("filmdrop-ui-content-${random_id.content_bucket_suffix.hex}-", 0, 60))
+  force_destroy = true
+}
+
+resource "aws_s3_bucket_ownership_controls" "filmdrop_ui_content_ownership_controls" {
+  bucket = aws_s3_bucket.filmdrop_ui_content.id
+  rule {
+    object_ownership = "BucketOwnerPreferred"
+  }
+}
+
+resource "aws_s3_bucket_public_access_block" "filmdrop_ui_content_public_access_block" {
+  bucket = aws_s3_bucket.filmdrop_ui_content.id
+
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
+
+resource "aws_s3_bucket_versioning" "filmdrop_ui_content_versioning" {
+  bucket = aws_s3_bucket.filmdrop_ui_content.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
 module "main" {
   source                  = "../.."
   filmdrop_ui_logo_file   = "./logo.png"
   filmdrop_ui_config      = filebase64("./config.dev.json")
   filmdrop_ui_logo        = filebase64("./logo.png")
   filmdrop_ui_release_tag = "v6.1.1-0"
+  filmdrop_ui_bucket_name = aws_s3_bucket.filmdrop_ui_content.id
   vpc_id                  = module.vpc-data.vpc_id
   vpc_private_subnet_ids  = module.vpc-data.private_subnet_ids
   vpc_security_group_ids  = [module.vpc-data.security_group_id]

@@ -48,7 +48,7 @@ resource "aws_codebuild_project" "filmdrop_ui_codebuild" {
 
     environment_variable {
       name  = "CONTENT_BUCKET"
-      value = aws_s3_bucket.filmdrop_ui_source_config.bucket
+      value = var.filmdrop_ui_bucket_name
     }
   }
 

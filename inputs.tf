@@ -38,3 +38,8 @@ variable "filmdrop_ui_logo" {
   description = "The base64 encoded file contents of the supplied custom logo"
   type        = string
 }
+
+variable "filmdrop_ui_bucket_name" {
+  description = "Name of the S3 bucket where the built FilmDrop UI application will be deployed"
+  type        = string
+}
