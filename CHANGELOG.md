@@ -24,8 +24,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
+- Restored `filmdrop_ui_bucket_name` input variable to specify the S3 bucket for deploying the built UI application
+
 ### Changed
 
 ### Fixed
+
+- Fixed `CONTENT_BUCKET` environment variable to use `filmdrop_ui_bucket_name` instead of the config bucket, preventing the built UI from being synced to the same bucket as the CodeBuild configuration
 
 ### Removed
