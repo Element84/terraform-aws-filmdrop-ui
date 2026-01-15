@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
+### Added
+
+### Changed
+
+### Fixed
+
+### Removed
+
+
+## [v1.0.1] - 2026-01-15
+
+### Added
+
+- Restored `filmdrop_ui_bucket_name` input variable to specify the S3 bucket for deploying the built UI application
+
+### Fixed
+
+- Fixed `CONTENT_BUCKET` environment variable to use `filmdrop_ui_bucket_name` instead of the config bucket, preventing the built UI from being synced to the same bucket as the CodeBuild configuration
+
+
 ## [v1.0.0] - 2026-01-07
 
 ### Added
@@ -16,20 +38,5 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 
 ### Fixed
-
-### Removed
-
-
-## Unreleased
-
-### Added
-
-- Restored `filmdrop_ui_bucket_name` input variable to specify the S3 bucket for deploying the built UI application
-
-### Changed
-
-### Fixed
-
-- Fixed `CONTENT_BUCKET` environment variable to use `filmdrop_ui_bucket_name` instead of the config bucket, preventing the built UI from being synced to the same bucket as the CodeBuild configuration
 
 ### Removed
