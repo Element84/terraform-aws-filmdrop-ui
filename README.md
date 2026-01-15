@@ -59,9 +59,9 @@ Before using this module, ensure you have:
    - Security groups allowing outbound traffic
    - VPC ID and subnet IDs
 
-3. **S3 Bucket**:
-    - Creates an S3 bucket to hold the build configuration
-    - *Requires* an already existing bucket for the application to be deployed to
+3. **S3 Buckets**:
+    - The module automatically creates an S3 bucket to hold the CodeBuild configuration (buildspec.yml)
+    - *Requires* an already existing S3 bucket for the built application to be deployed to (specified via `filmdrop_ui_bucket_name` variable)
 
 4. **Configuration Files**:
    - **Filmdrop UI Config JSON** (`./utils/config.dev.json`): Configuration file for the Filmdrop-UI application (see [Filmdrop UI documentation](https://github.com/Element84/filmdrop-ui) for structure)
@@ -170,6 +170,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_filmdrop_ui_bucket_name"></a> [filmdrop\_ui\_bucket\_name](#input\_filmdrop\_ui\_bucket\_name) | Name of the S3 bucket where the built FilmDrop UI application will be deployed | `string` | n/a | yes |
 | <a name="input_filmdrop_ui_config"></a> [filmdrop\_ui\_config](#input\_filmdrop\_ui\_config) | The base64 encoded file contents of the Filmdrop UI Deployment Config File | `string` | n/a | yes |
 | <a name="input_filmdrop_ui_logo"></a> [filmdrop\_ui\_logo](#input\_filmdrop\_ui\_logo) | The base64 encoded file contents of the supplied custom logo | `string` | n/a | yes |
 | <a name="input_filmdrop_ui_logo_file"></a> [filmdrop\_ui\_logo\_file](#input\_filmdrop\_ui\_logo\_file) | File of the supplied custom logo | `string` | n/a | yes |
